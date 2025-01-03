@@ -1,10 +1,11 @@
-'use client'
+'use client';
+
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const Map: React.FC = () => {
+const Map = () => {
   const [markers, setMarkers] = useState<any[]>([]);
 
   useEffect(() => {
@@ -12,11 +13,6 @@ const Map: React.FC = () => {
       .then((response) => response.json())
       .then((data) => setMarkers(data))
       .catch((error) => console.error("Error loading JSON:", error));
-
-    // Cleanup function for map when component unmounts
-    return () => {
-      // Optional cleanup (depends on Leaflet's behavior in Next.js)
-    };
   }, []);
 
   return (
@@ -42,7 +38,12 @@ const Map: React.FC = () => {
               <Marker
                 key={marker.id}
                 position={marker.position}
-                icon={marker.icon ? L.icon({ iconUrl: marker.icon, iconSize: [50, 50], iconAnchor: [16, 32], popupAnchor: [0, -32] }) : undefined}
+                icon={marker.icon ? L.icon({ 
+                  iconUrl: marker.icon, 
+                  iconSize: [50, 50], 
+                  iconAnchor: [16, 32], 
+                  popupAnchor: [0, -32] 
+                }) : undefined}
               >
                 <Popup>{marker.name}</Popup>
               </Marker>
